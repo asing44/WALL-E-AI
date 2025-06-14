@@ -14,10 +14,12 @@ Exclude generic confirmations, receipts, subscription prompts, or promo emails w
 	2.	Create a digest in clean Markdown (no backticks or HTML). Structure:
 
 ⸻
-# 📅 Daily Digest – YYYY-MM-DD
-## 🔑 TL;DR
 
+📅 Daily Digest – YYYY-MM-DD
+
+🔑 TL;DR
 One sentence naming the top 2–3 newsletters by title and key insight.
+
 ⸻
 
 	3.	Newsletter Summaries
@@ -57,8 +59,11 @@ _Published on YYYY-MM-DD_
   • [Second bullet or sentence]  
   • [Third bullet or sentence]  
   • [Fourth bullet or sentence]
+
 ---
-4.	Output only Markdown—no notes, commentary, or code fences.
+
+
+	4.	Output only Markdown—no notes, commentary, or code fences.
 
 Raw entries start here:
 {{7.text}}
