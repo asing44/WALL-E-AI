@@ -43,11 +43,6 @@ Assign one `type` (with emoji cue) per entry:
 | news-brief  | 🗞     | Multiple short headlines                  |
 | other       | 🧩     | Fallback                                  |
 
-# 2a — Event-Blast Override
-If the sender domain is “triangleonthecheap.com” OR
-the body contains ≥ 8 distinct date patterns (YYYY-MM-DD, “June 21”, etc.)
-then hard-set `type = event-blast`.
-
 ### 3 — Digest Header (HTML)
 
 ```html
