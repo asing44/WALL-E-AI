@@ -26,15 +26,6 @@ title, author, date, fromDomain, bodyText, links[], images[], type, bullets[].
 <!-- SKIPPED: Duplicate “{title}” → {link} -->.
 	•	Still drop promos, receipts, empty bodies.
 
-### 1a — Alt-parser for RSS/Reddit blocks
-If an entry starts with “Title:” instead of “Subject:”, parse it as:
-
-- `title`  = text after “Title:”
-- `date`   = text after “Date:”
-- `bodyText` = the rest, until `/ BREAK /`
-
-Set `type = reddit` and `fromDomain = "reddit.com"`.
-
 ⸻
 
 2 — Classify (+ Event-Blast Override)
@@ -50,6 +41,15 @@ other	🧩	Fallback
 Override: if fromDomain ∈ {triangleonthecheap.com, feeds.feedblitz.com} OR body contains ≥ 8 date patterns
 → force type = event-blast.
 
+| reddit      | 👽 | `fromDomain` = "reddit.com" OR subject starts with "r/" |
+
+<!-- Template for reddit block -->
+<!-- (place inside section 4 dynamic area) -->
+<!-- reddit -->
+<ul>
+  <li>⬆️ [Score] <a href="[link]">Title</a> — u/[author]</li>
+  …
+</ul>
 
 ⸻
 
@@ -137,11 +137,6 @@ Dynamic block by type
 2–3 sentences on impact/trend.</p>
 <hr>
 
-<!-- reddit -->
-<ul>
-  <li>⬆️ [Score] <a href="[link]">[Title]</a> — u/[Author]</li>
-  …
-</ul>
 
 ⸻
 
