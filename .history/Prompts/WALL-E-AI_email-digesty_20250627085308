@@ -18,21 +18,6 @@ title, author, date, fromDomain, bodyText, links[], images[], type, bullets[].
 • If rendering fails, retry once; on second failure append
 <!-- RENDER-ERROR --> and continue.
 
-### 0b — Size Guard (fit under Gmail 102 KB clip)
-After JSON is built but **before HTML rendering**:
-
-1. Calculate `roughSize = sum(length(json[i].bodyText) for i)`  
-   (1 char ≈ 1 byte; rough but fast).
-
-2. If `roughSize > 90 000`  
-   • For every `type in {event-blast, reddit, listicle}` truncate `bullets[]` to first **5** elements and set flag `hasMore = true`.  
-   • Drop each *Summary* string when `type = reddit`.  
-   • Re-compute; if still > 90 000, truncate TL;DR to 250 chars.
-
-> **Rendering**: whenever `hasMore = true` show “…and N more ➡️”.
-
-
-
 ⸻
 
 1 — Filter & Relevance / De-dup
@@ -89,7 +74,6 @@ Two–three sentences naming the day’s most important newsletters and a unifyi
 
 <!-- ↓↓↓ Table of Contents auto-generated ↓↓↓ -->
 <ul id="toc"></ul>
-links = take(uniqueLinks, 4);   // was unlimited
 <hr>
 
 (Close the wrapper </div> at the very end of the digest.)
@@ -100,12 +84,7 @@ links = take(uniqueLinks, 4);   // was unlimited
 
 <a id="[anchor-id]"></a>
 <h3>
-  <!-- Hero image — embed only if digest still < 70 KB and img < 40 KB -->
-{% if (includeImage && imgSize < 40000) %}
-  <img src="img-url" alt="[hero alt]" style="max-width:100%;height:auto;">
-{% else %}
-  <p><em>[Image]</em></p>
-{% endif %}
+  <img src="https://www.google.com/s2/favicons?domain=[fromDomain]" alt="" width="16" height="16" style="vertical-align:middle;margin-right:6px;">
   [Emoji] [Newsletter Title]
 </h3>
 

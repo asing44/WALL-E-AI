@@ -89,7 +89,6 @@ Two–three sentences naming the day’s most important newsletters and a unifyi
 
 <!-- ↓↓↓ Table of Contents auto-generated ↓↓↓ -->
 <ul id="toc"></ul>
-links = take(uniqueLinks, 4);   // was unlimited
 <hr>
 
 (Close the wrapper </div> at the very end of the digest.)
