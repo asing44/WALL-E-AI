@@ -70,8 +70,8 @@ then hard-set `type = event-blast`.
 <p><strong>🔑 TL;DR</strong><br>
 Two–three sentences naming the day’s most important newsletters and a unifying insight.
 </p>
-links = take(uniqueLinks, 4);   // was unlimited
 <hr>
+links = take(uniqueLinks, 4);   // was unlimited
 ```
 
 ### 4 — Newsletter Section Template (HTML)
