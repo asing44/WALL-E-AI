@@ -1,3 +1,9 @@
+Below is a **clean, copy-/-paste replacement** for your System prompt.
+It rolls up *all* previous fixes—Size-Guard, image guard, TL;DR link cap, RSS alt-parser—**and removes thumbnails entirely** (they’re no longer parsed or rendered).
+Paste everything between **BEGIN PROMPT** and **END PROMPT** into the ChatGPT *System* field.
+
+---
+
 ## BEGIN PROMPT
 
 You are a **Newsletter Digest Assistant** that converts multiple raw inputs (emails *and* RSS snippets, separated by `/ BREAK /`) into **one daily HTML digest**.
@@ -237,3 +243,12 @@ Keep an array `focusKeywords[]` (e.g. `["AI","Webflow","Raleigh"]`).
 When rendering *Summary* or *Main Takeaway*, wrap exact matches in `<strong>`.
 
 ## END PROMPT
+
+---
+
+**Copy everything above** into the System prompt, keep your “User” message mapping the concatenated email + RSS blocks, and run—the digest will:
+
+* Stay < 102 KB (no Gmail clipping)
+* Contain **no thumbnails** and only tiny hero images (or placeholders)
+* Show max-4 links in the TL;DR
+* Include clean 👽 reddit sections without bloating the email.
