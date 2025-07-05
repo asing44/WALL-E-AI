@@ -1,0 +1,27 @@
+If emailType == "event-blast" or "listicle":
+“You’re summarizing an event-blast. First, write a 1–2 sentence intro. Then output each event as a bullet in this
+format:
+- [Date]: [Event Name] @ [Location]
+Limit to the first 10 items; if more exist, append “…and N more.””
+Else:
+“Summarize this email in 2–3 sentences highlighting the core insight.”
+# Pre-Summarization Step: Summarize Each Email Based on Type
+
+1. Pre-clean bodyText:
+   - Remove any standalone lines matching /^\[Image\]$/i.
+   - Strip out attachments, embedded images, and long signatures.
+
+2. Classify emailType:
+   - Determine if the email is an "event-blast" or "listicle".
+   - Otherwise treat it as narrative/news-brief.
+
+3. Summarize by branch:
+   - If emailType == "event-blast" or "listicle":
+     “You’re summarizing an event-blast. First, write a 1–2 sentence introduction. Then output each event as a bullet in this format:
+      - [Date]: [Event Name] @ [Location]
+      Limit to the first 10 items; if more exist, append “…and N more.””
+   - Else:
+     “Summarize this email in 2–3 sentences highlighting the core insight or main takeaway.”
+
+4. Output:
+   - Store the result as `summaryText` for this email.

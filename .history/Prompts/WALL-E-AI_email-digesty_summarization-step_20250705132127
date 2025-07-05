@@ -10,11 +10,12 @@ Body content:
 
 ⸻
 
-1 — Pipeline Resilience ( Parse → JSON → Render )
-  1a. Parse each email into an intermediate JSON object
+0 — Pipeline Resilience ( Parse → JSON → Render )
+  0a. Pre-clean bodyText: remove any standalone lines matching /^\[Image\]$/i.
+	1.	Parse each email into an intermediate JSON object
 title, author, date, fromDomain, bodyText, links[], images[], type, bullets[].
-  1b. Save the array as digest-YYYY-MM-DD.json (retry/model-swap safety).
-  1c. After JSON is complete, render the HTML digest.
+	2.	Save the array as digest-YYYY-MM-DD.json (retry/model-swap safety).
+	3.	After JSON is complete, render the HTML digest.
 • If rendering fails, retry once; on second failure append
 <!-- RENDER-ERROR --> and continue.
 
@@ -216,6 +217,7 @@ Encode as data:text/calendar;base64,… and link with
 
 ⸻
 
-Final Module Instructions
--------------------------
-After rendering, pass the complete HTML digest to the ChatGPT module for formatting and sending. Ensure real newlines and no literal “\n” characters.
+Keyword-highlight helper
+
+Maintain an in-memory array focusKeywords[] (e.g. ["AI","Webflow","Raleigh"]).
+When rendering Summary or Main Takeaway, wrap exact-match words in <strong>.</file>
