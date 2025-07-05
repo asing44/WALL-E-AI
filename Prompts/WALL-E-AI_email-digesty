@@ -27,11 +27,20 @@ Source:[…]
 
 ### 0 Pipeline Resilience (Parse → JSON → Render)
 
+<<<<<<< HEAD
 1. Parse every block into a JSON object
    `title, author, date, fromDomain, bodyText, links[], images[], type, bullets[]`.
    *(For RSS blocks, `author`, `images[]` may be empty.)*
 2. Save the array as `digest-YYYY-MM-DD.json`.
 3. Render HTML. On failure retry once; on second failure append `<!-- RENDER-ERROR -->`.
+=======
+1 — Filter & Relevance / De-dup
+	•	Keep a rolling 7-day cache (seen-links.json) of canonicalised links (strip query string) and MD5 hash of the first 100 words.
+	•	Skip if either matches; log with
+<!-- SKIPPED: Duplicate “{title}” → {link} -->.
+	•	Still drop promos, receipts, empty bodies.
+	• Exception: always include newsletters where `fromDomain = triangleonthecheap.com`.
+>>>>>>> d25bce9 (Improve digest formatting and include specific newsletters)
 
 ---
 
@@ -102,15 +111,21 @@ Set: `type = reddit`, `fromDomain = "reddit.com"`.
 ul{margin:0 0 0 20px;padding:0;list-style-type:square;}
 </style>
 
-<hr>
+<hr style="margin:24px 0">
 <h3>📅 Daily Digest – YYYY-MM-DD</h3>
 
 <p><strong>🔑 TL;DR</strong><br>
 [[auto-generated summary — **cap at 250 chars when Size-Guard fires**]]</p>
 
+<<<<<<< HEAD
 <ul id="toc"><!-- auto Table of Contents --></ul>
 <hr>
 ```
+=======
+<!-- ↓↓↓ Table of Contents auto-generated ↓↓↓ -->
+<ul id="toc"></ul>
+<hr style="margin:24px 0">
+>>>>>>> d25bce9 (Improve digest formatting and include specific newsletters)
 
 *(Close wrapper `</div>` at very end.)*
 
@@ -125,12 +140,15 @@ ul{margin:0 0 0 20px;padding:0;list-style-type:square;}
 <p><em>By [Author] — Published YYYY-MM-DD</em><br>
 <a href="Source-URL">Visit Newsletter</a></p>
 
+<<<<<<< HEAD
 {% if includeImage && imgSize < 40000 %}
   <img src="img-url" alt="[hero alt]" style="max-width:100%;height:auto;">
 {% else %}
   <p><em>[Image]</em></p>
 {% endif %}
 
+=======
+>>>>>>> d25bce9 (Improve digest formatting and include specific newsletters)
 <p><strong>Links</strong></p>
 <ul>
   <li><span style="font-size:90%;">🔗</span> <a href="url">Descriptive text</a></li>
@@ -175,8 +193,12 @@ ul{margin:0 0 0 20px;padding:0;list-style-type:square;}
 ```html
 <p><strong>Main Takeaway</strong><br>
 2–3 sentences on impact/trend.</p>
+<<<<<<< HEAD
 <hr>
 ```
+=======
+<hr style="margin:24px 0">
+>>>>>>> d25bce9 (Improve digest formatting and include specific newsletters)
 
 ---
 
@@ -233,7 +255,12 @@ Generate `.ics` snippets with `UID` and timezone; encode as `data:text/calendar;
 
 #### Keyword-Highlight Helper
 
+<<<<<<< HEAD
 Keep an array `focusKeywords[]` (e.g. `["AI","Webflow","Raleigh"]`).
 When rendering *Summary* or *Main Takeaway*, wrap exact matches in `<strong>`.
 
 ## END PROMPT
+=======
+Maintain an in-memory array focusKeywords[] (e.g. ["AI","Webflow","Raleigh"]).
+When rendering Summary or Main Takeaway, wrap exact-match words in <strong>.</file>
+>>>>>>> d25bce9 (Improve digest formatting and include specific newsletters)
