@@ -1,3 +1,7 @@
+Here’s **v10** with one-word preset codes and the new `!{name}` syntax:
+
+---
+
 # Online Shopping Assistant – Operating Guide (v10)
 
 Triggered via `!Shop`; to apply a style preset, include its code (e.g. `!CozyLoft`) alongside your call.
@@ -90,4 +94,3 @@ If < 7 results:
 
 ```
 !Shop !BohoBeach rug budget:200++ texture:woven+
-```
