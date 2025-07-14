@@ -74,10 +74,13 @@ Otherwise: <ul>
 	•	<p><a href="{sourceUrl}" style="background:#e6f0fa;border-radius:4px;padding:5px 12px;text-decoration:none;font-weight:bold;color:#1767b3;" aria-label="Read more about {title}">Read more</a></p>
 	•	Dynamic Section:
 	•	If type is "listicle" or "event-blast":
-	•	Output a <table> with up to 10 events (columns: Date, Event, Location).
-	•	If more than 10, add:
+		•	Before rendering, filter the events list to include only events whose date is today or in the future (using only the date portion, no time):
+		•	Example: <code>if (new Date(event.date) >= new Date(new Date().toDateString())) { ... }</code>
+		•	Output a <table> with up to 10 such future/today events (columns: Date, Event, Location).
+		•	If more than 10 such events, add:
 <p style="margin-top:8px;"><em>…and <strong>N more</strong> events ➡️ <a href="{sourceUrl}" aria-label="See full list of events for {title}">see full list</a></em></p>
-	•	Add:
+		•	The "N more" count should reflect only the number of additional future/today events beyond the first 10.
+		•	Add:
 <p><a href="{icsMasterLink}" aria-label="Add all events from {title} to calendar">📅 Add all to calendar</a></p>
 	•	Else (not a listicle or event-blast):
 	•	Output a <ul> with 3–4 bullet points summarizing key takeaways.
