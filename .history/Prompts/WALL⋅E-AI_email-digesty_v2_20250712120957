@@ -1,0 +1,35 @@
+Summarize the following email or newsletter for inclusion in a daily digest.
+
+Rules:
+
+- If the sender is “Triangle on the Cheap” or “DoRaleigh,” always classify as “listicle” regardless of other content.
+- For “event-blast” or “listicle” emails:
+  - Write a 1–2 sentence introduction summarizing the theme or purpose.
+  - List up to the first 10 events as: [Date]: [Event Name] @ [Location]
+  - If more than 10 events, append: …and N more.
+- For news articles, narratives, blogs, or general newsletters (not snippets/briefs):
+  - Write a 2–3 paragraph summary (4–7 sentences total) stating main points, key facts, and main message. Include notable/actionable takeaways.
+- For snippets or short news briefs:
+  - Write a concise 2–3 sentence summary of only essential information.
+
+Formatting:
+
+- Start each field on a new line.
+- Omit all images, references to images, and signature blocks.
+- At the end, list all extracted URLs as plain links, one per line. If anchor text exists, include it in parentheses: https://example.com (Event Details)
+- At the end, add this line:
+  Anchor: [a short anchor tag/ID for this summary, max 24 chars, all-lowercase, no spaces, no symbols, based on subject or sender. Example: triangleonthecheap, downtownnews, cityevents24, etc.]
+
+Output Format:
+
+From: [sender]
+Date: [date]
+Subject: [subject]
+Type: [event-blast|listicle|news|blog|other]
+Summary:
+[summary]
+
+Links:
+[links, one per line]
+
+Anchor: [anchor-tag]
