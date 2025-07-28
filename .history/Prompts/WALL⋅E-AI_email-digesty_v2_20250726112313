@@ -45,12 +45,8 @@ Formatting:
 
 - Start each field on a new line.
 - Do not include images, image references, or signature blocks.
-- At the end of each digest entry, include a Links section:
-  <p><strong>Links</strong></p>
-  <ul>
-    <!-- For each link -->
-    <li>🔗 <a href="{url}" aria-label="Link to {text}">{text}</a></li>
-  </ul>
+- At the end, list all extracted URLs as plain links, one per line. If anchor text exists, include it in parentheses:
+https://example.com (Event Details)
 
 1. Top wrapper:
 • Wrap everything in a <div
@@ -131,7 +127,10 @@ Formatting:
 							<li>⬆️ {score} <a href="{link}" aria-label="Reddit link to {title}">{title}</a> — u/{author}
 							</li>
 						</ul>
-						
+						• Footer:
+						• <div style="text-align:right;font-size:90%;"><a href="#toc"
+								aria-label="Back to Table of Contents">↑ Back to Top</a></div>
+						•
 	</div>
 	•
 	<hr style="margin:32px 0 24px 0;">
@@ -146,3 +145,5 @@ Additional notes:
 • Use the provided field/variable names—if a field is missing, skip its block.
 • Output must closely follow the structure above, including classes/styles, anchor IDs, and all
 dynamic logic.
+
+Return only the HTML string.
