@@ -111,8 +111,9 @@ their respective anchor IDs in the document. -->
 				"N more" count should reflect only the number of additional future/today events
 				beyond the
 				first 10.
-				Each event row in the table should render the Event column as:
-				<a href="{link}" aria-label="Event: {name}">{name}</a>
+				Add:
+				<p><a href="{icsMasterLink}" aria-label="Add all events from {title} to calendar">📅 Add all to
+						calendar</a></p>
 				Else (not a listicle or event-blast):
 				Output a <ul> with 3–4 bullet points summarizing key takeaways.
 					Output a <p><strong>Main Takeaway</strong><br>2–3 sentences on impact/trend.</p>
