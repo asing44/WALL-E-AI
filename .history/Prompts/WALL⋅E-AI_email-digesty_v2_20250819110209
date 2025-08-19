@@ -1,0 +1,72 @@
+<div
+	style="max-width:650px;margin:0 auto;font-family:system-ui,Arial,sans-serif;line-height:1.45;color:#222;font-size:16px;">
+	<style>
+
+		h2 {
+			margin-top: 2rem;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body {
+				background: #111;
+				color: #ddd;
+			}
+
+			a {
+				color: #79B3FF;
+			}
+		}
+
+		ul {
+			margin: 0 0 0 20px;
+			padding: 0;
+			list-style-type: square;
+		}
+	</style>
+	<!-- STEP 1: Generate Table of Contents
+		- List each entry’s emoji + title linking to anchor IDs
+	-->
+
+	<!-- STEP 2: Render Digest Entries (skip type=news-brief) -->
+
+	<div
+		style="background:#f6f6f8;border-radius:8px;padding:20px 20px 10px 20
+		px;margin-bottom:18px;box-shadow:0 1px 6px #0001;">
+		<a id="{anchorId}"></a>
+		<h2>{emoji} {title}</h2>
+		<p><em>By {author} — Published {date} <span style="opacity:.8;">({weekday}, {relative})</span></em><br>
+			<a href="{sourceUrl}" aria-label="Visit {title} newsletter">Visit Newsletter</a><br>
+			<span>Source: <a href="{sourceUrl}" aria-label="Source for {title}">{hostname of sourceUrl}</a></span>
+		</p>
+		<!-- Compute weekday + relative label (Today, Tomorrow, N days ago) -->
+
+		<!-- Summary: -->
+		<p><strong>Summary</strong></p>
+		<p>{summary single paragraph 2–4 sentences}</p>
+		<p><a href="{sourceUrl}"
+				style="background:#e6f0fa;border-radius:4px;padding:5px 12px;text-decoration:none;font-weight:bold;color:#1767b3;"
+				aria-label="Read more about {title}">Read more</a></p>
+		<!-- Dynamic Section:
+			If type=listicle/event-blast/product-listing:
+				- Filter events to today/future
+				- Show up to 10 events in table (Date, Event, Location)
+				- Append “…and N more” if more
+			Else:
+				- Show 3–4 bullet takeaways
+				- Then a Main Takeaway paragraph
+		-->
+		<p><strong>Links</strong></p>
+		<ul>
+			<li>🔗 <a href="{url}" aria-label="Link to {text}">{text}</a></li>
+		</ul>
+	</div>
+	<hr style="margin:32px 0 24px 0;">
+
+	<!-- STEP 3: TL;DR Section
+		- If any news-brief items exist, combine into one block with list of brief items
+	-->
+
+	<!-- STEP 4: RSS Highlights
+		- If any rss items exist, render single section bundling all into <ul>
+	-->
+</div>

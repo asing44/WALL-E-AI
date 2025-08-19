@@ -107,7 +107,7 @@ their respective anchor IDs in the document. -->
 	If any items have type === "news-brief", render ONE combined TL;DR block AFTER all standard digest entries and BEFORE the RSS bundle:
 	<h2>🔖 TL;DR</h2>
 	<ul>
-	  <!-- for each news-brief item -->
+    For each news-brief item 
 	<li>🔗 <strong>{title}</strong> — {first sentence or key line of summary} (<a href="{sourceUrl}"
 			aria-label="Visit source for {title}">Source</a>)</li>
 	</ul>
@@ -124,4 +124,3 @@ their respective anchor IDs in the document. -->
 		This RSS bundle block is rendered only once, after all other entries, and only if at least one RSS-type item
 		exists.
 		-->
-</div>
