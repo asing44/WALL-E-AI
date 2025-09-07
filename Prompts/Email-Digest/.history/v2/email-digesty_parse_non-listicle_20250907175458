@@ -1,0 +1,2 @@
+System: Return ONLY valid JSON with {title, emoji:"💬", author, date(YYYY-MM-DD), summary(<=130 words), key_points: string[0..2], links:[{text,url}]}. No other keys.
+User: sender={{36.from}} subject={{36.subject}} today={{formatDate(now; "YYYY-MM-DD")}} tz=America/New_York

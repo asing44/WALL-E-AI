@@ -1,0 +1,23 @@
+RENDER SPEC
+- Title: "🤖 WALL⋅E-DIGESTY — {{formatDate(now; "DD-MM-YYYY")}}"
+- Table of contents linking to anchors per item (slugify title).
+- For each item (up to LIMIT):
+  • H2: emoji + title
+  • Meta line: author • date (YYYY-MM-DD)
+  • Summary paragraph (if present)
+  • key_points (if present): unordered list
+  • events (if present): three-column table [Date | Event (linked if link present, add 📅 Add if icsLink present) | Location]
+  • Links: primary CTA button to first link if available; else disabled button.
+- Footer: "Sent {{now}}." muted text.
+- Styling constraints:
+  • Single-column, 640–680px container, system fonts.
+  • No images, no emojis beyond those provided.
+  • Compact CSS: body, headings, .card, .btn, table basics, a:focus outline.
+- Size safety:
+  • If the DOM would exceed ~90 KB, drop trailing items until under budget.
+  • Avoid verbose inline styles or repeated long class names.
+
+Output: ONE valid <html>…</html> document.
+
+JSON:
+{{190.json}}
