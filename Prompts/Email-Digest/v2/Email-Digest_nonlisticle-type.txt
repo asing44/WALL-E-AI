@@ -2,8 +2,8 @@ Summarize general/news/narrative newsletters (not event-blasts/listicles).
 
 TASK
 	1.	Read the newsletter text.
-	2.	Produce a concise summary for busy readers (focus on key facts + “so what”).
-	3.	Extract 3–5 factual key points.
+	2.	Produce an expanded main summary for busy readers (key insights + "so what").
+	3.	Extract 5–8 keyword bullets (short phrases, not sentences).
 	4.	Capture source metadata.
 
 OUTPUT (JSON only; no prose, no comments)
@@ -13,19 +13,20 @@ OUTPUT (JSON only; no prose, no comments)
   "emoji": "📰",
   "author": "<sender name or domain>",
   "date": "<YYYY-MM-DD (published) or today if missing>",
-  "summary": "<2–3 short paragraphs, max 130 words total; paragraphs separated by \\n\\n>",
-  "key_points": ["• <concise fact>", "• <concise fact>", "• <concise fact>"],
+  "summary": "<2–3 short paragraphs, target 160–220 words total; paragraphs separated by \\n+\\n>",
+  "key_points": ["<keyword>", "<keyword>", "<keyword>", "<keyword>", "<keyword>"],
   "links": [{ "text": "Original", "url": "<sourceUrl>" }]
 }
 
 RULES
 	•	title: Prefer the newsletter Title over the subject line.
 	•	date: ISO YYYY-MM-DD; use today if missing.
-	•	summary: 2–3 paragraphs, ≤130 words total; plain, neutral; brief quotes allowed when central to the story; no hype.
-	•	key_points: 3–5 items, one sentence each; start with • ; no emojis/marketing.
+	•	summary: 2–3 paragraphs, aim for 160–220 words; plain, neutral; briefly cite when central to the point; avoid hype.
+	•	key_points (keyword-centric): 5–8 items; 2–4 words each; no leading bullets; lowercase where natural; no emojis; no terminal punctuation.
 	•	author: Prefer sender name; fallback to sender domain.
 	•	links: Choose a single Original URL. Selection order:
 	1.	canonical URL if present;
 	2.	else URL on the publisher domain;
 	3.	strip tracking params (e.g., utm_*, fbclid).
 	•	Output valid JSON only that matches the schema exactly.
+

@@ -30,7 +30,7 @@ OUTPUT FORMAT — return ONE JSON object only:
   "emoji": "📅",
   "author": "<sender name or domain>",
   "date": "<published date in YYYY-MM-DD, or today_iso if missing>",
-  "summary": "<1–2 sentences describing only the event lineup>",
+  "summary": "<2–4 sentences describing only the event lineup (concise)>",
   "events": [ {… up to 10 …} ],
   "more_count": <integer>,
   "links": [
