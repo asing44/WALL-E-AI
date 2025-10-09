@@ -30,7 +30,7 @@ OUTPUT FORMAT — return ONE JSON object only:
   "emoji": "📅",
   "author": "<sender name or domain>",
   "date": "<published date in YYYY-MM-DD, or today_iso if missing>",
-  "summary": "<2–4 sentences describing only the event lineup (concise)>",
+  "summary": "<two short paragraphs (1–2 sentences each) covering only the future event lineup; separate paragraphs with \\n\\n and include at least one emphasis marker such as **bold**, *italic*, or __underline__ in each>",
   "events": [ {… up to 10 …} ],
   "more_count": <integer>,
   "links": [
@@ -43,6 +43,8 @@ RULES
 - dates must be ISO 8601 (YYYY-MM-DD) in tz.
 - If no future events found, return events: [] and more_count: 0.
 - author: prefer a human sender in the header, else the domain from sender.
+- Ignore coupons, paid promotions, and storewide sales even if they mention dates; do not treat them as events or include them in the summary.
+- If the sender or subject contains "Triangle on the Cheap", prepend "Triangle on the Cheap - " to the title so the digest can surface it first.
 - Output MUST be valid JSON. No Markdown, no comments, no trailing commas.
 
 NEWSLETTER TEXT:

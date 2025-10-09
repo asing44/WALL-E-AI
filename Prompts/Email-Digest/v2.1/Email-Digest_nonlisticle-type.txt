@@ -13,7 +13,7 @@ OUTPUT (JSON only; no prose, no comments)
   "emoji": "📰",
   "author": "<sender name or domain>",
   "date": "<YYYY-MM-DD (published) or today if missing>",
-  "summary": "<1-2 short paragraphs, target 100-200 words total; paragraphs separated by \\n\\n>",
+  "summary": "<exactly two short paragraphs, 90-160 words total; separate paragraphs with \\n\\n and include at least one emphasis marker such as **bold**, *italic*, or __underline__ in each>",
   "key_points": ["<keyword>", "<keyword>", "<keyword>"],
   "links": [{ "text": "Original", "url": "<sourceUrl>" }]
 }
@@ -21,7 +21,7 @@ OUTPUT (JSON only; no prose, no comments)
 RULES
 	•	title: Prefer the newsletter Title over the subject line.
 	•	date: ISO YYYY-MM-DD; use today if missing.
-	•	summary: 2–3 paragraphs, aim for 100-200 words; plain, neutral; briefly cite when central to the point; avoid hype.
+	•	summary: exactly 2 paragraphs (1–2 sentences each), aim for 90-160 words total; keep tone neutral, cite when central to the point, and introduce emphasis markers (**bold**, *italic*, __underline__) to highlight the most actionable ideas.
 	•	key_points (tags): 2–3 items; 2–4 words each; no leading #; lowercase where natural; no emojis; no terminal punctuation (rendered as #tag1, #tag2, #tag3).
 	•	author: Prefer sender name; fallback to sender domain.
 	•	links: Choose a single Original URL. Selection order:
@@ -29,4 +29,3 @@ RULES
 	2.	else URL on the publisher domain;
 	3.	strip tracking params (e.g., utm_*, fbclid).
 	•	Output valid JSON only that matches the schema exactly.
-
