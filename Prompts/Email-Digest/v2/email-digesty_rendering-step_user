@@ -5,7 +5,7 @@ RENDER SPEC
   • H2: emoji + title
   • Meta line: author • date (YYYY-MM-DD)
   • Summary paragraph (if present)
-  • key_points (if present): unordered list
+  • tags (if key_points present): single line, comma-delimited from first up to 3 key_points; render as hashtags: "#tag1, #tag2, #tag3". Lowercase where natural; strip punctuation.
   • events (if present): three-column table [Date | Event (linked if link present, add 📅 Add if icsLink present) | Location]
   • Links: primary CTA button to first link if available; else disabled button.
 - Footer: "Sent {{now}}." muted text.

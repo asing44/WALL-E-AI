@@ -30,7 +30,7 @@ rb_clickid).
 • If ((published || today)) or invalid, use today in YYYY-MM-DD (America/New_York).
 • Enforce ISO YYYY-MM-DD.
 • Title and summary must be non-empty; drop items with empty titles. If summary empty, synthesize from 2–3 key points.
-• Key points: keep 3–5 concise bullets; if fewer, render what’s provided.
+• Tags (from key_points): normalize to short keywords; take first up to 3; use lowercase where natural; no emojis/punctuation.
 
 3) Filter & Limit
 • Exclude items where author or source domain contains thebrowser or equals The Browser.
@@ -134,13 +134,8 @@ For each item:
 	<p><a class="btn" aria-disabled="true" aria-label="Read more unavailable for {title}">Read more</a></p>
 	{/if}
 
-	<!-- Key points -->
-	<ul>
-		<li>{key point 1}</li>
-		<li>{key point 2}</li>
-		<li>{key point 3}</li>
-		<!-- up to 5 total -->
-	</ul>
+	<!-- Tags: render up to 3 as inline, comma-delimited with # prefix -->
+	<p style="margin:.5rem 0 0 0;opacity:.9;">#{tag1}, #{tag2}{#if tag3}, #{tag3}{/if}</p>
 
 	<!-- Main Takeaway: render ONLY if it adds information beyond the summary -->
 	{#if mainTakeawayAddsNewInfo}

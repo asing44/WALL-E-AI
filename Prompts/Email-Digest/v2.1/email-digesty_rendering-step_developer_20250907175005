@@ -9,4 +9,3 @@ Rules:
   add “…and N more” when more_count > 0.
 - Escape all user-provided strings (title, author, summary, locations).
 - Never invent content: render exactly what’s provided.
- - If an item has key_points, treat them as tags: take the first up to 3, normalize to short keywords, and render as a single inline line like "#tag1, #tag2, #tag3" (no bullets, no label). Lowercase where natural; strip punctuation.
