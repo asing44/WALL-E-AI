@@ -86,56 +86,27 @@ Table-based card structure:
 - Separate row for key points list
 - Bottom row for buttons
 
-2. rss.* (CONSOLIDATED TABLE CARD)
+2. rss.news
+Table-based card with:
+- Header row combining emoji and title
+- Nested table for two-paragraph layout
+- Bottom row for tags using table cells
 
-All items whose type begins with "rss." (rss.news, rss.socials, rss.daily-quote, rss.podcast, etc.) MUST be gathered together and rendered inside one single "RSS" card presented as an email-safe table. Do not render separate RSS cards per item.
+3. rss.socials
+Single-cell table design with:
+- Author and emoji in top cell
+- Content in middle cell
+- Stats in bottom cell
 
-Behavior:
-- The consolidated RSS card is one table-based card (use the Card Layout pattern).
-- The card includes an accessible table with a header row and one row per RSS item.
-- Place the RSS card after rss.daily-quote items and Triangle-on-the-Cheap card(s) per Ordering Rules.
+4. rss.daily-quote
+Centered table layout with:
+- Quote marks as content
+- Author in separate row
+- Full-width internal table for content
 
-Table columns (email-safe, inline styles):
-- Icon — small emoji or type icon (e.g., 📰, 💬, 💭). If missing, use 🗂️.
-- Headline — bold title; if a source/author is available, append " — *source*" in italics on the next line within the same cell.
-- Date — YYYY‑MM‑DD (right-aligned).
-- Summary — short, single-line preview (truncate safely to approx. 240 characters; preserve markdown-to-HTML emphasis conversions). For items with double-newline summaries, join with a single space to avoid multi-row height.
-- Link — a visible button-style <a role="button"> that opens the original item; if no link, render a disabled button.
+5. Future types
 
-Email-safe table example (instructional, must be implemented with inline styles):
-- Outer card table (full-width card)
-- Inner table for the RSS listing:
-  - Header row: Icon | Headline | Date | Summary | Link
-  - Each item row: five <td> cells with inline styles and appropriate aria-labels.
-
-Rendering details and accessibility:
-- Use inline styles only. Example header cell style: style="padding:10px 12px; font-weight:600; background-color:#f5f7fb; text-align:left; border-bottom:1px solid #e6eef9;"
-- For each link button: <a href="URL" role="button" aria-label="Open [escaped title]" style="display:inline-block; padding:8px 12px; background:#0f62ff; color:#fff; text-decoration:none; border-radius:4px;">View</a>
-- For disabled buttons: style="display:inline-block; padding:8px 12px; background:#cfd8e6; color:#6b7280; text-decoration:none; opacity:0.5; pointer-events:none; cursor:default;"
-- Provide aria-rowindex and aria-label as needed for screen readers.
-- Truncate summaries safely (avoid breaking HTML tags). If an item is a quote (rss.daily-quote), include the quote text as the Summary cell but keep it short; full quote cards may still be rendered separately per Ordering Rules (quotes are rendered first), but if a quote appears again among rss.* items after parsing, it should still appear in the consolidated RSS table only if not already output as the dedicated daily-quote block.
-
-Grouping and ordering inside the RSS table:
-- Preserve the global ordering rules when assembling rows: after lifting out rss.daily-quote items to the top, the remaining RSS rows follow date-descending within the RSS group.
-- Within the RSS table preserve stable ordering for identical dates.
-
-Summaries and text conversion (table-specific notes)
-- Convert markdown emphasis to HTML (<strong>, <em>, <u>) before truncation.
-- Escape all user-provided strings.
-- For table display collapse double newlines into single spaces (no multi-paragraph cells).
-- If tags or key_points exist, they may be appended to the Summary cell as "#tag" pills separated by commas (short form) — full tag pills visual styling is optional inside the table cell (use plain inline styles suitable for table cell).
-
-RSS Feed Handling
-- Parse rssFeedItems into standard items and include them in the consolidated RSS group.
-- If rssFeedItems is a string, parse JSON; if parsing fails, skip but do not abort.
-- Ensure parsed items map to the same fields used by the table (title, author/source, date, summary, links, tags).
-
-Output placement
-- The consolidated RSS card is a single card in the final HTML output (not multiple cards). It should appear after any dedicated rss.daily-quote outputs and after the Triangle-on-the-Cheap card per Ordering Rules.
-
-Examples (instructional):
-- If there are 6 rss.* items, render exactly one card containing a table with 6 rows.
-- If links are missing for some rows, provide disabled link buttons for those rows.
+Any unrecognized type should fall back to the rss.news layout, using a default emoji 🗂️ and preserving all fields.
 
 ⸻
 
