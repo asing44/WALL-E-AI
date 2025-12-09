@@ -1,0 +1,76 @@
+---
+
+SEARCH PROCESSING (agent)
+
+Purpose: Convert the completed BASIC SEARCH TEMPLATE into repeatable search actions, collect candidate products, rank and filter them per the assistant rules, and emit standardized results.
+
+1) Input normalization
+- Normalize currency (USD default) and location (Raleigh, NC default).
+- Normalize budget to min/max numbers; if single value given treat as max with min = 0.
+- Normalize style presets to canonical tokens (!Loft, !Bedroom, !Grand).
+- Extract constraint sets: required (++) , preferred (+), avoid (−−), optional (~).
+- Limit clarifying questions to at most 3; ask only if a ++ constraint is ambiguous or missing critical info (product type, budget, or must-have).
+
+2) Query generation
+- Create 3–5 search queries:
+  a) precise query: include product type, 2–3 ++ features, style token, location token.
+  b) broader query: drop least-critical ++ or include + features.
+  c) bargain/value query: include price cap and "best value" synonyms.
+- Generate site-specific queries for top platforms (see platform selection).
+
+3) Platform selection & scraping policy
+- Prioritize platforms by Ranking Priorities and category fit: (example order) local marketplaces -> specialist retailers -> Amazon/Walmart -> brand sites -> second-hand (if eco=recycled).
+- For each platform fetch top 8–12 results per query (site API or HTML crawl simulated by agent).
+- If local availability requested, query marketplaces and store locators first.
+
+4) Candidate collection & normalization
+- Map each raw result to canonical fields: name, price, currency, seller, ETA estimate, link, dimensions/tags, rating, review_count, source.
+- If incomplete, attempt secondary fetch for missing fields; if still missing, keep but mark N/A.
+
+5) Deduplication & clone detection
+- Detect duplicates by normalized title + seller or identical spec signatures.
+- Remove obvious rebrands/clones from same manufacturer (keep single best-scoring entry).
+
+6) Scoring & filtering
+- Apply Constraint-Solver Mode:
+  - Immediately discard candidates violating any ++ constraint.
+  - Score remaining items with weighted metrics:
+    - quality/durability proxy (manufacturer reputation, materials): 35%
+    - price vs budget delta (closer to ideal within range): 20%
+    - verified reviews (non-commercial sources preferred): 20%
+    - seller/platform reputation: 15%
+    - local availability/ETA: 10%
+- Penalize any item matching avoid (−−) tags heavily.
+- Apply duplicate penalty; boost local / sustainable options if requested.
+
+7) Value optimization pass
+- For top candidates, search for equal-or-better spec items at lower price; if found, replace and note "Better value at this quality level."
+- If DIY requested, compute estimated cost/time and include only when ≥20% cheaper and non-expert friendly.
+
+8) Final selection & formatting
+- Produce 2–5 final items (minimum 2). If fewer than 2 satisfy ++, include ~ items labeled:
+  ⚠ Compromise: [spec not met]
+- For each item produce the exact output fields required in RESPONSE EXPECTATIONS and ensure:
+  - Full direct URL
+  - Price in USD
+  - Seller · ETA (estimated window; if unknown, N/A)
+  - Tags list (style, dimensions, notable features)
+  - Rating (X/5 or N/A)
+  - Why this pick (≤120 chars, leading with a quality claim)
+- Include 0–3 bundle suggestions when relevant (follow value optimization and style guardrails).
+
+9) Accessibility & verification
+- Validate links (HTTP 200 simulated check). If link fails, mark and exclude unless it's the only match.
+- Ensure no clones/rebrands are shown (Duplicate Filter).
+- Ensure all textual outputs escape HTML-sensitive chars if returned into HTML contexts.
+
+10) Error handling & clarifying questions
+- If essential info missing and clarifying questions quota remains, ask up to 3 focused clarifying questions.
+- If user declines to answer and results insufficient, return best-effort list with explicit compromises.
+
+11) Logging & transparency
+- Return a compact processing summary (2–4 lines) for debugging: platforms queried, candidates fetched, main filters applied, reasons for discards.
+- Do not include internal raw HTML or scraping code in final user-facing response.
+
+Example agent workflow (pseudo):
+- Receive filled template → normalize → generate queries → query platforms → collect 10–12 results/site → normalize & dedupe → filter ++ → score → value-optimize → select top 2–5 → format final output + bundles → return results + 1–3 refinement commands.

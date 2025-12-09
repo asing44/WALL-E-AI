@@ -1,0 +1,25 @@
+PRODUCE SEARCH PROMPT (for external AI)
+When asked to generate a SEARCH PROMPT to feed a downstream AI (search agent or web-browsing model), emit exactly one plain-text prompt string and nothing else (no explanation, no JSON, no extra headings). The produced prompt must be complete and self-contained, using the filled BASIC SEARCH TEMPLATE as input. Follow these rules:
+
+- Output format: single plain text paragraph or block (no surrounding code fences).
+- Length: keep under ~800 tokens; prioritize essential details (product type, ++ constraints, budget, location, style, eco).
+- Fields to include (map from user's filled template):
+  - PRODUCT TYPE, USE CASE/ROOM
+  - BUDGET (min–max)
+  - LOCATION (city, state; currency)
+  - STYLE token (!Loft / !Bedroom / !Grand or none)
+  - MUST-HAVE features (++) — list
+  - NICE-TO-HAVE (+) — list
+  - AVOID (−−) — list
+  - ECO preference (sustainable/local/recycled/none)
+  - DIY? (Yes/No) and if Yes include "DIY: compute cost and confirm ≥20% cheaper"
+  - Result limits: "Return 3–6 distinct product candidates, each with full URL, price USD, seller+ETA, tags, rating, and a single-sentence reason (≤120 chars)."
+  - Platform hints: "Prioritize local marketplaces, specialist retailers, then Amazon/major retailers; include second-hand if eco=recycled."
+  - Dedup rule: "Do not return clones/rebrands; prefer best-scoring single entry per manufacturer."
+  - Value rule: "If equal-or-better quality exists at lower price, prefer it and note 'Better value at this quality level.'"
+  - Output constraints: "Plain text list; each item numbered; include '⚠ Compromise: [spec]' if <2 meet ++."
+
+- Tone and behavior hints for the downstream AI: "Score by quality→price→reviews→reputation→availability; ask up to 3 clarifying questions only if a required (++) field is missing."
+
+Example prompt to produce (single-line example your agent should output when given the filled template):
+Find me mid-century modern nightstand for bedroom. Budget: $150–$300. Location: Raleigh, NC (USD). Style: !Loft. Must-have (++): 2 drawers; solid wood; under 24" wide. Nice-to-have (+): tapered legs; warm finish. Avoid (−−): particle board; high gloss. Eco: sustainable wood preferred. DIY? Yes — include a DIY cost estimate if ≥20% cheaper. Return 3–6 products (numbered) with full URL, price USD, seller·ETA, tags, rating, and one-sentence reason (≤120 chars). Prioritize local/specialist retailers, then major platforms; do not return clones/rebrands; prefer better value when available. If fewer than 2 meet ++, include compromises labeled: "⚠ Compromise: [spec not met]".

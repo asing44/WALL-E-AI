@@ -1,0 +1,171 @@
+AI Shopping Search Prompt – v15
+
+Use this prompt with ChatGPT's shopping agent or online AI shopping assistants to find products that match your needs.
+
+---
+
+BASIC SEARCH TEMPLATE
+
+Find me [PRODUCT TYPE] for [USE CASE/ROOM].
+
+**Budget:** $[MIN]–$[MAX]
+**Location:** [CITY, STATE] (default: Raleigh, NC; USD)
+**Style:** [!Loft | !Bedroom | !Grand | none] (optional preset)
+
+**Must-have features (++):**
+- [feature 1]
+- [feature 2]
+
+**Nice-to-have features (+):**
+- [feature 1]
+- [feature 2]
+
+**Avoid (−−):**
+- [attribute 1]
+- [attribute 2]
+
+**Eco preferences:** [sustainable | local | recycled | none]
+
+---
+
+QUICK-SEARCH EXAMPLES
+
+Example 1 – Task lighting for a home office:
+Find me desk lamp for home office.
+Budget: $30–$80
+Style: !Loft
+Must-have: adjustable brightness, USB charging
+Nice-to-have: wireless, minimal design
+Avoid: plastic base
+
+Example 2 – Outdoor seating:
+Find me outdoor dining chair.
+Budget: $150–$300 each
+Location: Raleigh, NC
+Style: !Grand
+Must-have: weather-resistant, stackable
+Nice-to-have: cushion included, natural wood
+Eco: sustainable materials
+
+Example 3 – Storage solution:
+Find me bookshelf.
+Budget: $100–$250
+Must-have: 5+ shelves, solid construction
+Nice-to-have: modular, room divider style
+Avoid: particle board
+
+---
+
+RESPONSE EXPECTATIONS
+
+For each product, expect:
+- **Product name + direct link** (full URL)
+- **Price** (USD)
+- **Seller · ETA** (platform + delivery window)
+- **Tags** (style, features, dimensions)
+- **Rating** (X/5 or N/A)
+- **Why this pick** (≤120 chars; quality claim + value reason)
+
+---
+
+FEEDBACK COMMANDS (after results)
+
+After you receive results, use these to refine:
+
+- **+1** – show 2–3 similar alternatives
+- **−1** – drop that attribute from search
+- **want shortlist** – condense to top 3
+- **ignore [brand/item]** – exclude from future results
+- **promote [style/type]** – boost this in re-ranking
+- **bundle suggestions** – show complementary items
+
+---
+
+SEARCH VARIATIONS
+
+**Preset Styles:**
+- !Loft = cozy industrial (metal, reclaimed wood, exposed brick vibes)
+- !Bedroom = boho beach (soft textures, natural tones, relaxed)
+- !Grand = Scandi beach (minimal, light wood, clean lines)
+
+**Eco Modes:**
+- sustainable = certified eco-materials, minimal packaging
+- local = available nearby (Raleigh area preferred)
+- recycled = upcycled or second-hand marketplace
+
+**DIY Option:**
+- Include "DIY?" at the end to request a build-it-yourself alternative if safe, non-expert friendly, and ≥20% cheaper.
+
+---
+
+CONSTRAINT SYMBOLS
+
+- ++ = required (must-have)
+- + = preferred (nice bonus)
+- ~ = optional (neutral)
+- −− = avoid (disqualify)
+
+Example:
+"Must-have (++): wood frame, under $200
+Nice-to-have (+): modularity, local stock
+Avoid (−−): metal legs, glossy finish"
+
+---
+
+TIPS FOR BEST RESULTS
+
+1. **Be specific:** "desk lamp" > "lighting" (helps narrow category).
+2. **Budget matters:** Set a range. AI will optimize within it.
+3. **Use presets:** Pick a style preset if you have one; it filters palette & keywords automatically.
+4. **Feedback loop:** Use +1, −1, promote to steer results fast.
+5. **Bundle smart:** Ask "bundle suggestions?" after picking your main item.
+6. **Verify links:** Always click the direct product link provided.
+
+---
+
+EXAMPLE FULL SEARCH
+
+"Find me mid-century modern nightstand.
+Budget: $150–$300
+Location: Raleigh, NC
+Style: !Loft
+Must-have (++): 2 drawers, solid wood, under 24" wide
+Nice-to-have (+): tapered legs, warm finish
+Avoid (−−): particle board, high gloss
+Eco: sustainable wood preferred
+DIY? Yes"
+
+---
+
+NOTES
+
+- Default location: Raleigh, NC (USD). Update if needed.
+- Responses always include ≥2 options (or labeled compromises).
+- No clones, rebrands, or obvious reskins will be shown.
+- Value optimization applied: equal-or-better quality at lower price replaces higher-priced picks.
+
+PRODUCE SEARCH PROMPT (for external AI)
+When asked to generate a SEARCH PROMPT to feed a downstream AI (search agent or web-browsing model), emit exactly one plain-text prompt string and nothing else (no explanation, no JSON, no extra headings). The produced prompt must be complete and self-contained, using the filled BASIC SEARCH TEMPLATE as input. Follow these rules:
+
+- Output format: single plain text paragraph or block (no surrounding code fences).
+- Length: keep under ~800 tokens; prioritize essential details (product type, ++ constraints, budget, location, style, eco).
+- Fields to include (map from user's filled template):
+  - PRODUCT TYPE, USE CASE/ROOM
+  - BUDGET (min–max)
+  - LOCATION (city, state; currency)
+  - STYLE token (!Loft / !Bedroom / !Grand or none)
+  - MUST-HAVE features (++) — list
+  - NICE-TO-HAVE (+) — list
+  - AVOID (−−) — list
+  - ECO preference (sustainable/local/recycled/none)
+  - DIY? (Yes/No) and if Yes include "DIY: compute cost and confirm ≥20% cheaper"
+  - Result limits: "Return 3–6 distinct product candidates, each with full URL, price USD, seller+ETA, tags, rating, and a single-sentence reason (≤120 chars)."
+  - Platform hints: "Prioritize local marketplaces, specialist retailers, then Amazon/major retailers; include second-hand if eco=recycled."
+  - Dedup rule: "Do not return clones/rebrands; prefer best-scoring single entry per manufacturer."
+  - Value rule: "If equal-or-better quality exists at lower price, prefer it and note 'Better value at this quality level.'"
+  - Output constraints: "Plain text list; each item numbered; include '⚠ Compromise: [spec]' if <2 meet ++."
+
+- Tone and behavior hints for the downstream AI: "Score by quality→price→reviews→reputation→availability; ask up to 3 clarifying questions only if a required (++) field is missing."
+
+Example prompt to produce (single-line example your agent should output when given the filled template):
+Find me mid-century modern nightstand for bedroom. Budget: $150–$300. Location: Raleigh, NC (USD). Style: !Loft. Must-have (++): 2 drawers; solid wood; under 24" wide. Nice-to-have (+): tapered legs; warm finish. Avoid (−−): particle board; high gloss. Eco: sustainable wood preferred. DIY? Yes — include a DIY cost estimate if ≥20% cheaper. Return 3–6 products (numbered) with full URL, price USD, seller·ETA, tags, rating, and one-sentence reason (≤120 chars). Prioritize local/specialist retailers, then major platforms; do not return clones/rebrands; prefer better value when available. If fewer than 2 meet ++, include compromises labeled: "⚠ Compromise: [spec not met]".
