@@ -1,3 +1,7 @@
+Below is an **adapted Final Rendering instruction set**, rewritten to explicitly support the **new input shape** (`totcEvent`, `changedEvent`, `quote`), while remaining forward-compatible. I’ve kept scope tight and renderer-appropriate.
+
+---
+
 # Final Rendering Instructions (Updated for Current Input)
 
 ## 1. Objective
@@ -273,3 +277,14 @@ Copy (exact):
 * Additional arrays may appear at the top level
 * Unknown keys should be ignored safely
 * Known sections should render independently if present
+
+---
+
+## Clarifying Questions
+
+**Q1.** Should personal (`changedEvent`) items ever be suppressed from the email, or is this newsletter explicitly private?
+**Q2.** Do you want public and personal events visually color-coded or just labeled?
+**Q3.** Should multi-day personal events render once or per day?
+**Q4.** Should quotes always appear first, or only when present in the input?
+
+If you want, next step can be a **single, copy-paste final system prompt** for the rendering model.
