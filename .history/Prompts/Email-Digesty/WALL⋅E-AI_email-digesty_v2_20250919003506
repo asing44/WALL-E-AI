@@ -1,0 +1,222 @@
+Goal
+Transform the Make step output into a single, valid HTML email digest using the house template. Output HTML only—no
+Markdown, no extra prose.
+
+Input Shape
+Array of objects like:
+
+[
+{ "parsedItems1": { "json": "[]" },
+"parsedItems2": { "json": "[{...}, {...}]" } }
+]
+
+Each parsedItems*.json is a string containing a JSON array of newsletter items with fields:
+title, emoji, author, date, summary, key_points[], links[{text,url}], Anchor?
+
+⸻
+
+Processing Rules
+
+1) Parse & Merge
+• Parse each parsedItems*.json string; if missing/invalid, treat as [].
+• Concatenate in this order: parsedItems1, then parsedItems2.
+
+2) Sanitize & Normalize
+• Trim all string fields.
+• Links: choose the first absolute URL; strip tracking params (utm_*, fbclid, gclid, igshid, mc_cid, mc_eid, vero_id,
+rb_clickid).
+• Author: if ((sender)) or blank, fallback to publisher domain (strip www.).
+• Date:
+• If ((published || today)) or invalid, use today in YYYY-MM-DD (America/New_York).
+• Enforce ISO YYYY-MM-DD.
+• Title and summary must be non-empty; drop items with empty titles. If summary empty, synthesize from 2–3 key points.
+• Tags (from key_points): normalize to short keywords; take first up to 3; use lowercase where natural; no emojis/punctuation.
+
+3) Filter & Limit
+• Exclude items where author or source domain contains thebrowser or equals The Browser.
+• Deduplicate by normalized (title + source domain) (case-insensitive). Keep first.
+• Sort by date descending; tie-break by original order.
+• Keep the first 5 items after filtering.
+
+4) Computed Fields
+
+For each item:
+• weekday: Mon/Tue/Wed/Thu/Fri/Sat/Sun.
+• relative (vs today, America/New_York): Today, Tomorrow, In N days, N days ago.
+• hostname: from primary URL.
+• anchorId: slugify title (lowercase, alphanumerics + hyphens).
+
+⸻
+
+Rendering Rules
+
+Container & Styles
+• One outer container:
+
+<div
+	style="max-width:650px;margin:0 auto;font-family:system-ui,Arial,sans-serif;line-height:1.45;color:#222;font-size:16px;">
+	<style>
+		@media (prefers-color-scheme: dark) {
+			body {
+				background: #111;
+				color: #ddd;
+			}
+
+			a {
+				color: #79B3FF;
+			}
+		}
+
+		h2 {
+			margin-top: 2rem;
+			margin-bottom: 10px;
+		}
+
+		ul {
+			margin: 0 0 0 20px;
+			padding: 0;
+			list-style-type: square;
+		}
+
+		.btn {
+			background: #e6f0fa;
+			border-radius: 4px;
+			padding: 5px 12px;
+			text-decoration: none;
+			font-weight: bold;
+			color: #1767b3;
+			display: inline-block;
+		}
+
+		.btn[aria-disabled="true"] {
+			opacity: .5;
+			pointer-events: none;
+			cursor: not-allowed;
+		}
+
+		.card {
+			background: #f6f6f8;
+			border-radius: 8px;
+			padding: 18px 18px 10px 18px;
+			box-shadow: 0 1px 6px #0001;
+		}
+	</style>
+</div>
+
+Table of Contents (TOC)
+• List each item as {emoji} {title} linking to #{anchorId}.
+• Titles only (no date badges) unless specified otherwise.
+
+Digest Cards (Non-Listicle)
+
+For each item:
+
+<div class="card">
+	<a id="{anchorId}"></a>
+	<h2>{emoji} {title}</h2>
+	<p>
+		<em>By {author} — Published {date} <span style="opacity:.8;">({weekday}, {relative})</span></em><br>
+		<!-- Source link lines rendered only if URL exists -->
+		{#if sourceUrl}
+		<a href="{sourceUrl}" aria-label="Visit {title} newsletter">Visit Newsletter</a><br>
+		<span>Source: <a href="{sourceUrl}" aria-label="Source for {title}">{hostname}</a></span>
+		{/if}
+	</p>
+
+	<p><strong>Summary</strong></p>
+	<!-- 2–3 short paragraphs; slight overflow beyond 130 words is acceptable -->
+	<p>{summary…}</p>
+
+	<!-- Read more button -->
+	{#if sourceUrl}
+	<p><a href="{sourceUrl}" class="btn" aria-label="Read more about {title}">Read more</a></p>
+	{#else}
+	<p><a class="btn" aria-disabled="true" aria-label="Read more unavailable for {title}">Read more</a></p>
+	{/if}
+
+	<!-- Tags: render up to 3 as inline, comma-delimited with # prefix -->
+	<p style="margin:.5rem 0 0 0;opacity:.9;">#{tag1}, #{tag2}{#if tag3}, #{tag3}{/if}</p>
+
+	<!-- Main Takeaway: render ONLY if it adds information beyond the summary -->
+	{#if mainTakeawayAddsNewInfo}
+	<p><strong>Main Takeaway</strong><br>{1–2 sentence synthesis}</p>
+	{/if}
+
+	<!-- Links section -->
+	{#if sourceUrl}
+	<p><strong>Links</strong></p>
+	<ul>
+		<li>🔗 <a href="{sourceUrl}" aria-label="Link to Visit Newsletter">Visit Newsletter</a></li>
+	</ul>
+	{/if}
+</div>
+
+Digest Cards (Listicle / Event-Blast / Product-Listing)
+
+For each listicle/event item:
+
+<div class="card">
+	<a id="{anchorId}"></a>
+	<h2>{emoji} {title}</h2>
+	<p>
+		<em>By {author} — Published {date} <span style="opacity:.8;">({weekday}, {relative})</span></em><br>
+		{#if sourceUrl}
+		<a href="{sourceUrl}" aria-label="Visit {title} newsletter">Visit Newsletter</a><br>
+		<span>Source: <a href="{sourceUrl}" aria-label="Source for {title}">{hostname}</a></span>
+		{/if}
+	</p>
+
+	<!-- Intro line (1–2 sentences) -->
+	<p>{summary…}</p>
+
+	<!-- Events table: only if events exist -->
+	{#if events.length > 0}
+	<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+		<thead>
+			<tr>
+				<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">Date</th>
+				<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">Event</th>
+				<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- render up to first 10 future/today events -->
+			{#each events.slice(0,10) as event}
+			<tr>
+				<td style="padding:6px 8px;border-bottom:1px solid #eee;">{event.date} ({event.weekday}, {event.relative})</td>
+				<td style="padding:6px 8px;border-bottom:1px solid #eee;">
+					<a href="{event.link}" aria-label="Event: {event.name}">{event.name}</a>
+					{#if event.icsLink}
+					<span> · <a href="{event.icsLink}" aria-label="Add {event.name} to calendar">📅 Add</a></span>
+					{/if}
+				</td>
+				<td style="padding:6px 8px;border-bottom:1px solid #eee;">{event.location}</td>
+			</tr>
+			{/each}
+		</tbody>
+	</table>
+	{#if events.length > 10}
+	<p style="margin-top:8px;"><em>…and <strong>{events.length - 10}</strong> more events ➡️ {#if sourceUrl}<a href="{sourceUrl}" aria-label="See full list of events for {title}">see full list</a>{/if}</em></p>
+	{/if}
+	{/if}
+
+	<!-- Links section -->
+	{#if sourceUrl}
+	<p><strong>Links</strong></p>
+	<ul>
+		<li>🔗 <a href="{sourceUrl}" aria-label="Link to Visit Newsletter">Visit Newsletter</a></li>
+	</ul>
+	{/if}
+</div>
+
+<hr style="margin:32px 0 24px 0;">
+
+
+⸻
+
+Robustness Rules
+• If primary URL missing:
+• Show disabled “Read more” button (aria-disabled="true", reduced opacity, no pointer events).
+• Omit “Visit Newsletter” and “Source” lines.
+• Summaries: target ≤130 words; slight overflow acceptable. Don’t truncate mid-sentence unless exceeding by >20%.
+• Always emit valid, self-contained HTML only. No external CSS/JS, no JSON, no prose.
