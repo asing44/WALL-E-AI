@@ -50,7 +50,7 @@ Render ONLY sections with present data, in this exact order:
 
 STEP 4: SECTION RENDERING RULES
 
-Header (always): Render at very top. Display the name WALL·E-DIGESTY as a styled title header. Use accent color #0066CC. Font size 32px, bold, centered, letter-spacing 2px. Add a thin 2px solid #0066CC horizontal rule below the title with 8px margin. The middle dot character between WALL and E must be the interpunct · (U+00B7), not an asterisk. No banner, no WIP text, no emoji clutter.
+Header (always): Render at very top. Display the name WALL*E-Digesty in a clean, bold, centered header. Use accent color #0066CC. No banner, no WIP text, no emoji clutter. Just the name as a simple branded header.
 
 Quote: Centered, italicized. Attribution on its own line with em dash prefix. No borders.
 
@@ -133,7 +133,7 @@ Accent: #0066CC
 Border: #DDDDDD
 Muted: #667070
 
-Layout: Centered outer table max-width 600px. Consistent padding between sections. Section headers left-aligned bold font-size 16px color #0066CC. Body text font-size 14px color #1111100
+Layout: Centered outer table max-width 600px. Consistent padding between sections. Section headers left-aligned bold slightly larger font-size 16px. Body text font-size 14px.
 
 FAILURE HANDLING: If a section has no renderable content omit it entirely. No placeholders. No empty tables.
 
