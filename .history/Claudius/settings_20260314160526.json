@@ -5,15 +5,15 @@
         "tana": {
             "command": "npx",
             "args": ["-y", "mcp-remote", "http://127.0.0.1:8262/mcp"]
-        },
-        "actualBudget": {
-            "command": "npx",
-            "args": ["-y", "actual-mcp", "--enable-write"],
-            "env": {
-                "ACTUAL_PASSWORD": "pJmh3iMK0oHis1",
-                "ACTUAL_SERVER_URL": "https://manipulative-oyster.pikapod.net",
-                "ACTUAL_BUDGET_SYNC_ID": "29e50b38-7c76-49a8-8f32-7e0a1c161170"
-            }
+        }
+    },
+    "actualBudget": {
+        "command": "npx",
+        "args": ["-y", "actual-mcp", "--enable-write"],
+        "env": {
+            "ACTUAL_PASSWORD": "m6znxJ65plnroy",
+            "ACTUAL_SERVER_URL": "https://manipulative-oyster.pikapod.net",
+            "ACTUAL_BUDGET_SYNC_ID": "29e50b38-7c76-49a8-8f32-7e0a1c161170"
         }
     },
     "preferences": {
